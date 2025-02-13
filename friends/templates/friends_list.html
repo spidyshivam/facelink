@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h2>Friend Requests</h2>
+{% if requests %}
+    {% for request in requests %}
+        <p>{{ request.sender.username }} wants to be your friend</p>
+        <a href="{% url 'accept_friend_request' request.id %}">Accept</a> |
+        <a href="{% url 'reject_friend_request' request.id %}">Reject</a>
+    {% endfor %}
+{% else %}
+    <p>No friend requests.</p>
+{% endif %}
+
+<h2>My Friends</h2>
+<ul>
+    {% if friends %}
+        {% for friend in friends %}
+            <li><a href="{% url 'user_profile' friend.username %}">{{ friend.username }}</a></li>
+        {% endfor %}
+    {% else %}
+        <li>You have no friends yet.</li>
+    {% endif %}
+</ul>
+
+
+{% endblock %}

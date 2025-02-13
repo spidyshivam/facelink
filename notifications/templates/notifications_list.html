@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Notifications</h2>
+    <ul>
+        {% for notification in notifications %}
+            <li>
+                {% if notification.notification_type == 'like' %}
+                    <a href="{% url 'post_detail' notification.post.id %}">
+                        {{ notification.sender.username }} liked your post
+                    </a>
+                {% elif notification.notification_type == 'comment' %}
+                    <a href="{% url 'post_detail' notification.post.id %}">
+                        {{ notification.sender.username }} commented on your post
+                    </a>
+                {% elif notification.notification_type == 'message' %}
+                    <a href="{% url 'chat_detail' notification.sender.username %}">
+                        {{ notification.sender.username }} sent you a message
+                    </a>
+                {% elif notification.notification_type == 'friend_request' %}
+                    {{ notification.sender.username }} sent you a friend request
+                {% endif %}
+                <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a>
+            </li>
+        {% empty %}
+            <li>No new notifications</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

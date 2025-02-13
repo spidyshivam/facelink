@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <meta name="author" content="Shivam Patel" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script>
+            function fetchNotificationCount() {
+                fetch("/notifications/unread_count/")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById(
+                            "notification-count",
+                        ).innerText = data.unread_count;
+                    })
+                    .catch((error) =>
+                        console.error(
+                            "Error fetching notification count:",
+                            error,
+                        ),
+                    );
+            }
+
+            // Fetch notification count every 10 seconds
+            setInterval(fetchNotificationCount, 10000);
+            fetchNotificationCount();
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <nav class="navbar">
+                <a href="/">Home</a>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'notifications_list' %}"
+                    >Notifications (<span id="notification-count">0</span>)</a
+                >
+                <a href="{% url 'friends_list' %}">Friends</a>
+                <a href="{% url 'chat_list' %}">Chat</a>
+            </nav>
+
+            <div class="main">{% block content %} {% endblock %}</div>
+            <footer>
+                <p>&copy; 2023 Facelink. All rights reserved.</p>
+            </footer>
+        </div>
+    </body>
+</html>

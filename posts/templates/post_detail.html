@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ post.user.username }}</h2>
+<p>{{ post.content }}</p>
+{% if post.image %}
+    <img src="{{ post.image.url }}" width="300">
+{% endif %}
+
+<p>{{ post.like_set.count }} Likes</p>
+<p><a href="{% url 'post_like' post.id %}">Like/Unlike</a></p>
+
+<h3>Comments:</h3>
+{% for comment in comments %}
+    <p><b>{{ comment.user.username }}</b>: {{ comment.content }}</p>
+{% endfor %}
+
+<form method="post" action="{% url 'post_comment' post.id %}">
+    {% csrf_token %}
+    <input type="text" name="content" required>
+    <button type="submit">Comment</button>
+</form>
+<a href="{% url 'post_list' %}">Back</a>
+
+
+{% endblock %}
