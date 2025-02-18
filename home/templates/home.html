@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="create_post">
+<h2>Create Post</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea name="content" required></textarea>
+    <input type="file" name="image">
+    <button type="submit">Post</button>
+</form>
+<a href="{% url 'post_list' %}">Cancel</a>
+</div>
+<div class="posts">
+{% for post in posts %}
+    <div>
+        <h3>{{ post.user.username }}</h3>
+        <p>{{ post.content }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" width="300">
+        {% endif %}
+        <p>{{ post.like_set.count }} Likes</p>
+        <p><a href="{% url 'post_like' post.id %}">Like/Unlike</a></p>
+        <p><a href="{% url 'post_detail' post.id %}">View</a></p>
+    </div>
+{% endfor %}
+<a href="{% url 'post_create' %}">Create Post</a>
+
+</div>
+
+
+{% endblock %}

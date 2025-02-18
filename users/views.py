@@ -14,6 +14,9 @@ def register(request):
             user = form.save()
             login(request, user)
             return redirect('profile')
+        else:
+            # Handle form errors
+            return render(request, 'register.html', {'form': form, 'errors': form.errors})
     else:
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -26,6 +29,8 @@ def user_login(request):
         if user:
             login(request, user)
             return redirect('profile')
+        else:
+            return render(request, 'login.html', {'error': 'Invalid Username or Password'})
     return render(request, 'login.html')
 
 def user_logout(request):

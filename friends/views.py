@@ -34,3 +34,10 @@ def friends_list(request):
     friends = CustomUser.objects.filter(id__in=friends)
     friend_requests = FriendRequest.objects.filter(receiver=request.user, accepted=False)
     return render(request, 'friends_list.html', {'friends': friends, 'requests' : friend_requests})
+
+@login_required
+def unfriend(request, username):
+    friend = get_object_or_404(CustomUser, username=username)
+    Friendship.objects.filter(user1=request.user, user2=friend).delete()
+    Friendship.objects.filter(user1=friend, user2=request.user).delete()
+    return redirect('friends_list')

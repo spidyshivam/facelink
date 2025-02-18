@@ -3,6 +3,42 @@
         <title>{% block title %} {% endblock %}</title>
         <meta name="author" content="Shivam Patel" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr 3fr 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+            .navbar {
+                grid-column: 1 / 2;
+                background-color: #f8f9fa;
+                padding: 10px;
+            }
+            .main {
+                grid-column: 2 / 3;
+                padding: 10px;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            @media (max-width: 768px) {
+                .grid-container {
+                    grid-template-columns: 1fr;
+                }
+                .navbar {
+                    grid-column: 1 / 2;
+                }
+                .main {
+                    grid-column: 1 / 2;
+                }
+            }
+        </style>
         <script>
             function fetchNotificationCount() {
                 fetch("/notifications/unread_count/")
@@ -27,17 +63,19 @@
     </head>
     <body>
         <div class="container">
-            <nav class="navbar">
-                <a href="/">Home</a>
-                <a href="{% url 'profile' %}">Profile</a>
-                <a href="{% url 'notifications_list' %}"
-                    >Notifications (<span id="notification-count">0</span>)</a
-                >
-                <a href="{% url 'friends_list' %}">Friends</a>
-                <a href="{% url 'chat_list' %}">Chat</a>
-            </nav>
+            <div class="grid-container">
+                <nav class="navbar">
+                    <a href="/">Home</a>
+                    <a href="{% url 'profile' %}">Profile</a>
+                    <a href="{% url 'notifications_list' %}"
+                        >Notifications (<span id="notification-count">0</span>)</a
+                    >
+                    <a href="{% url 'friends_list' %}">Friends</a>
+                    <a href="{% url 'chat_list' %}">Chat</a>
+                </nav>
 
-            <div class="main">{% block content %} {% endblock %}</div>
+                <div class="main">{% block content %} {% endblock %}</div>
+            </div>
             <footer>
                 <p>&copy; 2023 Facelink. All rights reserved.</p>
             </footer>
