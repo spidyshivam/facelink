@@ -1,10 +1,92 @@
-{% extends 'user_base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Registration</title>
+    <style>
+        body {
+            font-family: 'FF Tisa', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgba(52, 65, 74, 0.8);
+            color: white;
+            background-image: url('https://wallpaperaccess.com/full/2923163.jpg');
+        }
 
-{% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
+        .register-container {
+            background-color: rgba(27, 29, 33, 1);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            text-align: center;
+            width: 30%;
+        }
 
-{% endblock %}
+        .register-container h2 {
+            margin-bottom: 1.5rem;
+            color: #8feef5;
+        }
+
+        .register-container .form-field {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #898989;
+            border-radius: 0.25rem;
+            background-color: rgba(27, 29, 33, 1);
+            color: white;
+        }
+
+        .register-container button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            background-color: #8feef5;
+            color: rgba(27, 29, 33, 1);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .register-container button:hover {
+            background-color: #898989;
+        }
+
+        .register-container .error {
+            color: red;
+            margin-top: 1rem;
+            display: block;
+        }
+
+        .register-container p {
+            margin-top: 1.5rem;
+        }
+
+        .register-container p a {
+            color: #8feef5;
+            text-decoration: none;
+        }
+
+        .register-container p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+        <span class="error">{{ error }}</span>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>

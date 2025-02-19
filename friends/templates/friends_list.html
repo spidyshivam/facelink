@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<h2>Find Friends</h2>
+<form method="get" action="{% url 'find_friends' %}">
+    <input type="text" name="search" placeholder="Search for friends">
+    <button type="submit">Search</button>
+</form>
+
+
 
 <h2>Friend Requests</h2>
 {% if requests %}

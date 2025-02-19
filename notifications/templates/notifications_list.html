@@ -3,21 +3,21 @@
     <h2>Notifications</h2>
     <ul>
         {% for notification in notifications %}
-            <li>
-                {% if notification.notification_type == 'like' %}
+            <li class="notification">
+                {% if notification.notification_type == 'like' and notification.post %}
                     <a href="{% url 'post_detail' notification.post.id %}">
-                        {{ notification.sender.username }} liked your post
+                        {{ notification.sender.username|default_if_none:"Unknown User" }} liked your post
                     </a>
-                {% elif notification.notification_type == 'comment' %}
+                {% elif notification.notification_type == 'comment' and notification.post %}
                     <a href="{% url 'post_detail' notification.post.id %}">
-                        {{ notification.sender.username }} commented on your post
+                        {{ notification.sender.username|default_if_none:"Unknown User" }} commented on your post
                     </a>
                 {% elif notification.notification_type == 'message' %}
                     <a href="{% url 'chat_detail' notification.sender.username %}">
-                        {{ notification.sender.username }} sent you a message
+                        {{ notification.sender.username|default_if_none:"Unknown User" }} sent you a message
                     </a>
                 {% elif notification.notification_type == 'friend_request' %}
-                    {{ notification.sender.username }} sent you a friend request
+                    {{ notification.sender.username|default_if_none:"Unknown User" }} sent you a friend request
                 {% endif %}
                 <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a>
             </li>

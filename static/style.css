@@ -50,19 +50,69 @@ body{
 .main{
     text-align: center;
 }
-.post{
+
+.post {
     background-color: rgba(27, 29, 33, 1);
-    margin: auto;
-    border: white;
     border-radius: 0.75rem;
+    margin: auto;
+    margin-bottom: 3%;
+    padding: 1%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
     width: 70%;
 }
 
-.post a{
-    justify-content: center;
-    flex-direction: column;
-    padding: 1%;
+.post h4 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #666;
 }
+
+.post h4 a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.post h4 a:hover {
+    text-decoration: underline;
+}
+
+.post p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.post img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.post-actions a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.post-actions a:hover {
+    text-decoration: underline;
+}
+
+.likes {
+    font-size: 14px;
+    color: #666;
+}
+
 .liked {
         color: blue;
     }
@@ -124,7 +174,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
 }
 button[type="submit"] {
     display: block;
-    width: 50%;
+    width: 20%;
     margin: 1rem auto;
     padding: 0.8rem;
     background-color: rgba(40, 44, 52, 1);
@@ -186,7 +236,17 @@ li:hover {
   justify-content: space-evenly;
 }
 
+.search_results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.logo{
+            font-family: "Jacquard 12", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
 
 @media only screen and (max-width: 960px){
   /* Base CSS */
@@ -204,3 +264,4 @@ li:hover {
     display: grid;
     grid-template-columns: 1fr;
   }
+

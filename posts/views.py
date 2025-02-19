@@ -27,8 +27,8 @@ def post_like(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     like, created = Like.objects.get_or_create(user=request.user, post=post)
     if not created:
-        like.delete()  # Unlike if already liked
-    return redirect('post_detail', post_id=post.id)
+        like.delete() 
+    return redirect(request.META.get('HTTP_REFERER') or 'post_detail', post_id=post.id)
 
 @login_required
 def post_comment(request, post_id):
@@ -37,3 +37,11 @@ def post_comment(request, post_id):
         content = request.POST['content']
         Comment.objects.create(user=request.user, post=post, content=content)
     return redirect('post_detail', post_id=post_id)
+
+@login_required
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, id=post_id, user=request.user)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('post_list')
+    return render(request, 'post_confirm_delete.html', {'post': post})

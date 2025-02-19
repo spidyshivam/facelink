@@ -30,10 +30,23 @@ def reject_friend_request(request, request_id):
 
 @login_required
 def friends_list(request):
+    search_query = request.GET.get('search')
+    if search_query:
+        return redirect('find_friends')
     friends = Friendship.objects.filter(user1=request.user).values_list('user2', flat=True)
     friends = CustomUser.objects.filter(id__in=friends)
     friend_requests = FriendRequest.objects.filter(receiver=request.user, accepted=False)
     return render(request, 'friends_list.html', {'friends': friends, 'requests' : friend_requests})
+
+@login_required
+def find_friends(request):
+    search_query = request.GET.get('search', '')
+
+    if search_query:
+         users = CustomUser.objects.filter(username__icontains=search_query).exclude(id=request.user.id)
+    else:
+        users = CustomUser.objects.none()
+    return render(request, 'find_friends.html', {'users': users, 'search_query': search_query})
 
 @login_required
 def unfriend(request, username):
@@ -41,3 +54,9 @@ def unfriend(request, username):
     Friendship.objects.filter(user1=request.user, user2=friend).delete()
     Friendship.objects.filter(user1=friend, user2=request.user).delete()
     return redirect('friends_list')
+@login_required
+def cancel_friend_request(request, request_id):
+    friend_request = get_object_or_404(FriendRequest, id=request_id, sender=request.user)
+    receiver_username = friend_request.receiver.username  # Get receiver's username before deleting
+    friend_request.delete()
+    return redirect('user_profile', username=receiver_username)

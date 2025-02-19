@@ -1,20 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <h2>{{ user.username }}'s Profile</h2>
 
-<p><strong>Email:</strong> {{ user.email }}</p>
+<!-- Profile Picture -->
+<img src="{{ user.profile_pic.url }}" width="100" height="100" style="border-radius: 50%;" 
+     onerror="this.onerror=null;this.src='/media/profile_pics/default.jpg';">
+
+<!-- Show email only if the user is logged in -->
+{% if is_own_profile %}
+    <p><strong>Email:</strong> {{ user.email }}</p>
+{% endif %}
+
 <p><strong>Joined:</strong> {{ user.date_joined }}</p>
+
+<!-- Friend Request/Unfriend -->
 {% if user != request.user %}
     {% if is_friend %}
         <a href="{% url 'unfriend' user.username %}">Unfriend</a>
+    {% elif is_friend_request_sent %}
+        <a href="{% url 'cancel_friend_request' friend_request.id %}">Cancel Friend Request</a>
     {% else %}
         <a href="{% url 'send_friend_request' user.username %}">Send Friend Request</a>
     {% endif %}
+    
 {% endif %}
 
+<!-- Edit Profile -->
 {% if is_own_profile %}
     <a href="{% url 'profile_update' %}">Edit Profile</a>
+{% endif %}
+
+<!-- Display Posts if Friends -->
+{% if is_friend or is_own_profile %}
+    <h3>{{ user.username }}'s Posts</h3>
+    {% for post in posts %}
+        <div class="post">
+            <p>{{ post.content }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" width="300">
+            {% endif %}
+            <p>{{ post.like_set.count }} Likes</p>
+            <a href="{% url 'post_like' post.id %}">Like/Unlike</a>
+            <a href="{% url 'post_detail' post.id %}">View Post</a>
+        </div>
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
 {% endif %}
 
 {% endblock %}

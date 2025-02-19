@@ -1,11 +1,114 @@
-{% extends 'user_base.html' %}
-{% block content %}
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <button type="submit">Login</button>
-</form>
-<span class="error">{{ error }}</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Social Media Login</title>
+    <style>
+        body {
+            font-family: 'FF Tisa', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            background-image: url('https://wallpaperaccess.com/full/2923163.jpg');
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo h1 {
+            font-size: 2.5rem;
+            color: #8feef5;
+            margin-bottom: 1rem;
+        }
+        .login-container {
+            background-color: rgba(27, 29, 33, 1);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            text-align: center;
+            width: 30%;
+        }
 
-{% endblock %}
+        .login-container h2 {
+            margin-bottom: 1.5rem;
+            color: #8feef5;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #898989;
+            border-radius: 0.25rem;
+            background-color: rgba(27, 29, 33, 1);
+            color: white;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            background-color: #8feef5;
+            color: rgba(27, 29, 33, 1);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #898989;
+        }
+
+        .login-container .error {
+            color: red;
+            margin-top: 1rem;
+            display: block;
+        }
+
+        .login-container p {
+            margin-top: 1.5rem;
+        }
+
+        .login-container p a {
+            color: #8feef5;
+            text-decoration: none;
+        }
+
+        .login-container p a:hover {
+            text-decoration: underline;
+        }
+        .logo{
+            font-family: "Jacquard 12", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="logo">
+        <h1>Facelink</h1>
+    </div>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <span class="error">{{ error }}</span>
+        <p>Want to register instead? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+</div>
+</body>
+</html>

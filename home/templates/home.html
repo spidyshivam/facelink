@@ -1,31 +1,51 @@
+
 {% extends 'base.html' %}
 {% block content %}
 <div class="create_post">
-<h2>Create Post</h2>
+<h4>Create Post</h4>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <textarea name="content" required></textarea>
+    <br>
     <input type="file" name="image">
+    <br>
     <button type="submit">Post</button>
 </form>
-<a href="{% url 'post_list' %}">Cancel</a>
 </div>
 <div class="posts">
 {% for post in posts %}
-    <div>
-        <h3>{{ post.user.username }}</h3>
+    <div class="post">
+        <h4>
+            <a href="{% url 'user_profile' post.user.username %}">{{ post.user.username }}</a>
+            • {{ post.created_at|date:"M d, Y H:i" }}
+        </h4>
         <p>{{ post.content }}</p>
+        
         {% if post.image %}
-            <img src="{{ post.image.url }}" width="300">
+            <img src="{{ post.image.url }}" alt="Post Image">
         {% endif %}
-        <p>{{ post.like_set.count }} Likes</p>
-        <p><a href="{% url 'post_like' post.id %}">Like/Unlike</a></p>
-        <p><a href="{% url 'post_detail' post.id %}">View</a></p>
+        
+        <div class="post-actions">
+            <p class="likes">{{ post.like_set.count }} Likes</p>
+            <div>
+                <a href="{% url 'post_like' post.id %}">Like/Unlike</a>
+                <a href="{% url 'post_detail' post.id %}">View Post</a>
+            </div>
+        </div>
     </div>
 {% endfor %}
-<a href="{% url 'post_create' %}">Create Post</a>
 
 </div>
 
-
+<div class="pagination">
+    {% if posts.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ posts.previous_page_number }}">Previous</a>
+    {% endif %}
+    <span>Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+    {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}">Next</a>
+        <a href="?page={{ posts.paginator.num_pages }}">Last</a>
+    {% endif %}
+</div>
 {% endblock %}
