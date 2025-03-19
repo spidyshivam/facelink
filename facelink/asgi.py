@@ -8,6 +8,9 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/asgi/
 """
 
 import os
+import django 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'facelink.settings')
+django.setup()  # Add this line if missing
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from chat.routing import websocket_urlpatterns  # Import WebSocket routes
