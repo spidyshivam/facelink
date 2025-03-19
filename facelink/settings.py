@@ -32,6 +32,9 @@ ALLOWED_HOSTS = ['*']
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = 'login'
+CSRF_TRUSTED_ORIGINS = [
+    "https://facelink-production.up.railway.app",
+]
 
 # Application definition
 
